@@ -14,9 +14,10 @@ object SigarBuild extends Build {
 
   def outputDir = Def.setting(baseDirectory.value / "sigar-bin" / "lib")
 
+  private lazy val artifactName = "sigar-olegych"
+
   lazy val sigar = project.in(file("bindings/java")).settings(commonSettings).settings(
-    name := "sigar"
-    , version := "1.7.0-OLEGYCH-SNAPSHOT"
+    name := artifactName
     , dist := ant("build dist").value
     , clean := {
       clean.value
@@ -33,11 +34,11 @@ object SigarBuild extends Build {
       IO.zip(files.get.map(f => f -> f.getName), outputZip)
       outputZip
     }
-    , addArtifact(Artifact("sigar", "zip", "zip", "libs"), packageNative)
+    , addArtifact(Artifact(artifactName + "-" + scala.util.Properties.osName.replaceAllLiterally(" ", "-").toLowerCase, "zip", "zip", "libs"), packageNative)
   )
 
   def commonSettings = Seq(
-    licenses +=("Apache 2", url("http://www.apache.org/licenses/LICENSE-2.0"))
+    licenses +=("Apache-2.0", url("http://www.apache.org/licenses/LICENSE-2.0"))
     , organization := "org.hyperic"
     , autoScalaLibrary := false
     , crossPaths := false

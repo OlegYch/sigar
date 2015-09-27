@@ -1,1 +1,1 @@
-version in ThisBuild := "1.7.0-OLEGYCH-SNAPSHOT"
+version in ThisBuild := "1.7.0"
